@@ -15,6 +15,8 @@ const Home: NextPage = () => {
   const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
   const { data: session, status } = useSession();
 
+  console.log("session: ", session);
+
   if (status === "loading") {
     return <Spinner />;
   }

@@ -20,7 +20,7 @@ export default function SignIn({ providers }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
         <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
           <>
             {Object.values(providers).map((provider: any) => (
@@ -58,7 +58,7 @@ export default function SignIn({ providers }: any) {
             ))}
           </>
         </div>
-      </main>
+      </div>
     </>
   );
 }
