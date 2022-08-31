@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { trpc } from "../utils/trpc";
+import { trpc } from "@/utils/trpc";
 import { useSession } from "next-auth/react";
 import Router from "next/router";
 import Spinner from "@/components/Spinner";
@@ -12,20 +12,15 @@ type TechnologyCardProps = {
 };
 
 const Home: NextPage = () => {
-  const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
-  const { data: session, status } = useSession();
+  const { data, isLoading } = trpc.useQuery([
+    "example.hello",
+    { text: "from tRPC" },
+  ]);
+  // const { data: session, status } = useSession();
 
-  console.log("session: ", session);
+  // console.log("session: ", session);
 
-  if (status === "loading") {
-    return <Spinner />;
-  }
-
-  if (status === "unauthenticated") {
-    Router.push("/auth/signin");
-    return <Spinner />;
-  }
-
+  if (isLoading) return <Spinner />;
   return (
     <>
       <Head>
@@ -61,9 +56,9 @@ const Home: NextPage = () => {
             documentation="https://trpc.io/"
           />
         </div>
-        <div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full">
+        {/* <div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full">
           {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading..</p>}
-        </div>
+        </div> */}
       </main>
     </>
   );

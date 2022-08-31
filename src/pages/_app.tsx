@@ -7,14 +7,42 @@ import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import type { AppRouter } from "../server/router";
 import "../styles/globals.css";
+import Layout from "../components/layout";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Spinner from "@/components/Spinner";
 
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+
+  console.log("looaaaaaaading: ", loading);
+
+  useEffect(() => {
+    const handleStart = (url: String) =>
+      url !== router.asPath && setLoading(true);
+    const handleComplete = () => setLoading(false);
+    const handleError = (url: String) =>
+      url === router.asPath && setLoading(false);
+
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleError);
+
+    return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleError);
+    };
+  });
+
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <Layout>{loading ? <Spinner /> : <Component {...pageProps} />}</Layout>
     </SessionProvider>
   );
 };

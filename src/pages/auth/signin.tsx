@@ -9,9 +9,6 @@ export async function getServerSideProps() {
 }
 
 export default function SignIn({ providers }: any) {
-  // const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
-  console.log("providers: ", providers);
-
   return (
     <>
       <Head>
