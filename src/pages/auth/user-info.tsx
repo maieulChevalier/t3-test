@@ -21,7 +21,7 @@ export default function UserInfo() {
   });
   const onSubmit = async (data: any) => {
     await updateUsername.mutateAsync({ username: data.username });
-    // router.reload();
+    // router.reload()
     Router.push("/");
   };
 
