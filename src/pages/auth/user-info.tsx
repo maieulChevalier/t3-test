@@ -33,7 +33,6 @@ export default function UserInfo() {
     /\s{2,}/g.test(username) ||
     /-{2,}/g.test(username) ||
     /_{2,}/g.test(username)
-
     // A-Za-z0-9-_ À-ÖØ-öø-ÿ\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f
     // A-Za-z0-9-_  => alpha-numeric characters with - _ and spaces
     // À-ÖØ-öø-ÿ accept all french/german characters with accents
