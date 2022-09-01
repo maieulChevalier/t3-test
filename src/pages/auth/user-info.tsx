@@ -20,9 +20,7 @@ export default function UserInfo() {
     },
   });
   const onSubmit = async (data: any) => {
-    await updateUsername.mutateAsync({
-      username: " BONJOUR JJJ ",
-    });
+    await updateUsername.mutateAsync({ username: data.username });
     // router.reload();
     Router.push("/");
   };
@@ -46,6 +44,7 @@ export default function UserInfo() {
     setValue("username", username.slice(0, -1));
   }
   if (username?.length > 30) {
+    console.log("username: ", username);
     setValue("username", username.slice(0, -1));
   }
   return (
