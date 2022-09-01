@@ -20,8 +20,6 @@ const MyApp: AppType = ({
 
   const [loading, setLoading] = useState(false);
 
-  console.log("looaaaaaaading: ", loading);
-
   useEffect(() => {
     const handleStart = (url: String) =>
       url !== router.asPath && setLoading(true);
