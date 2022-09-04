@@ -1,3 +1,3 @@
 import { entity } from 'simpler-state'
 
-export const usernameEntity = entity("")
+export const usernameEntity = entity('')

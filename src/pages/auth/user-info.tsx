@@ -42,7 +42,7 @@ export default function UserInfo() {
   ) {
     setValue("username", username.slice(0, -1));
   }
-  if (username?.length > 30) {
+  if (username.length > 30) {
     console.log("username: ", username);
     setValue("username", username.slice(0, -1));
   }

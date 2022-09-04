@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Spinner() {
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center">
       <Image src="/pacman-loader.svg" height={50} width={50} />
     </div>
   );
