@@ -2,11 +2,7 @@ import clsx from "clsx";
 import React, { ReactNode } from "react";
 
 function BottomNavigationButton(props: any) {
-  const {
-    icon,
-    className,
-    ...otherProps
-  }: { icon: ReactNode; className: string; otherProps: any } = props;
+  const { icon, className, ...otherProps } = props;
 
   return (
     <button

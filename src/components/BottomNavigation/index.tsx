@@ -12,11 +12,11 @@ export default function BottomNavigation() {
   const router = useRouter();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex justify-around border-t p-3">
+    <div className="fixed bottom-0 left-0 right-0 flex justify-around border-t p-3 ">
       <BottomNavigationButton
         icon={
           <HomeIcon
-            className={clsx(router.pathname === "/" && "stroke-cyan-600")}
+            className={clsx(router.pathname === "/" && "stroke-slate-500")}
           />
         }
         onClick={() => router.push("/")}
@@ -25,7 +25,7 @@ export default function BottomNavigation() {
         icon={
           <PlusCircleIcon
             className={clsx(
-              router.pathname.includes("/create") && "stroke-cyan-600"
+              router.pathname.includes("/create") && "stroke-slate-500"
             )}
           />
         }
@@ -35,7 +35,7 @@ export default function BottomNavigation() {
         icon={
           <UserIcon
             className={clsx(
-              router.pathname.includes("/user") && "stroke-cyan-600"
+              router.pathname.includes("/user") && "stroke-slate-500"
             )}
           />
         }
