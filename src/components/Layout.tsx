@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react";
 import SignIn from "./SignIn";
 import Spinner from "./Spinner";
 import UserInfo from "./SignInUserInfo";
+import { useEffect, useState } from "react";
 
 export default function Layout({ children }: any) {
   // ALLOWS DISPLAYING A SPINNER WHEN TRANSITIONNING TO ANOTHER PAGE, COULD BE USED TO SHOW ANOTHER TRANSITION UI
@@ -33,22 +34,43 @@ export default function Layout({ children }: any) {
 
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
-    return <Spinner />;
-  }
-  if (status === "unauthenticated" || session === null) {
-    return <SignIn />;
-  }
+  const [isOnline, setIsOnline] = useState(false);
 
-  if (status === "authenticated" && session?.user?.role === null) {
-    return <UserInfo />;
-  }
+  useEffect(() => {
+    console.log("helo");
+    if (navigator.onLine) {
+      setIsOnline(true);
+    } else {
+      setIsOnline(false);
+    }
+  });
 
-  if (status === "authenticated" && session?.user?.role === "nameSet") {
+  if (isOnline) {
+    if (status === "loading") {
+      return <Spinner />;
+    }
+    if (status === "unauthenticated" || session === null) {
+      return <SignIn />;
+    }
+
+    if (status === "authenticated" && session?.user?.role === null) {
+      return <UserInfo />;
+    }
+    if (status === "authenticated" && session?.user?.role === "nameSet") {
+      return (
+        <>
+          <main>{children}</main>
+        </>
+      );
+    }
+  } else {
     return (
-      <>
-        <main>{children}</main>
-      </>
+      <div className="flex min-h-screen flex-col items-center justify-center px-2 text-center">
+        <p className="text-2xl font-medium">No internet</p>
+        <p className="text-base">
+          Please check your internet connection and try again.
+        </p>
+      </div>
     );
   }
 
