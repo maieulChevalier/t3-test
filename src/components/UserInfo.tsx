@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { useForm } from "react-hook-form";
 import Router, { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
 import { getSession, useSession } from "next-auth/react";
+import { useAtom } from "jotai";
+import { authorizationsAtom } from "@/jotai";
 
 export default function UserInfo() {
   const updateUsername = trpc.useMutation(["auth.updateUsername"]);
 
-  const { data: session, status } = useSession();
   const router = useRouter();
 
   const {
@@ -21,9 +22,10 @@ export default function UserInfo() {
       username: "",
     },
   });
+
   const onSubmit = async (data: any) => {
     await updateUsername.mutateAsync({ username: data.username }).then(() => {
-      router.push("/");
+      router.reload();
     });
   };
 
@@ -45,7 +47,6 @@ export default function UserInfo() {
     setValue("username", username.slice(0, -1));
   }
   if (username.length > 30) {
-    console.log("username: ", username);
     setValue("username", username.slice(0, -1));
   }
   return (

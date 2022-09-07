@@ -1,8 +1,12 @@
 import useRedirect from "@/hooks/useRedirect";
+import { authorizationsAtom } from "@/jotai";
+import { useAtom } from "jotai";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import SignIn from "./SignIn";
 import Spinner from "./Spinner";
+import UserInfo from "./UserInfo";
 
 export default function Layout({ children }: any) {
   // ALLOWS DISPLAYING A SPINNER WHEN TRANSITIONNING TO ANOTHER PAGE, COULD BE USED TO SHOW ANOTHER TRANSITION UI
@@ -30,14 +34,27 @@ export default function Layout({ children }: any) {
   // if (loading) {
   //   return <Spinner />;
   // }
-  const { isRedirecting, status } = useRedirect();
+  // const { isRedirecting, status } = useRedirect();
+  const { data: session, status } = useSession();
 
-  if (isRedirecting && status === "loading") {
+  if (status === "loading") {
     return <Spinner />;
   }
-  return (
-    <>
-      <main>{children}</main>
-    </>
-  );
+  if (status === "unauthenticated" || session === null) {
+    return <SignIn />;
+  }
+
+  if (status === "authenticated" && session?.user?.role === null) {
+    return <UserInfo />;
+  }
+
+  if (status === "authenticated" && session?.user?.role === "nameSet") {
+    return (
+      <>
+        <main>{children}</main>
+      </>
+    );
+  }
+
+  return <Spinner />;
 }
