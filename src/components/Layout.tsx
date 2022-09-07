@@ -1,9 +1,4 @@
-import useRedirect from "@/hooks/useRedirect";
-import { authorizationsAtom, shouldReloadAtom } from "@/jotai";
-import { useAtom } from "jotai";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import SignIn from "./SignIn";
 import Spinner from "./Spinner";
 import UserInfo from "./UserInfo";

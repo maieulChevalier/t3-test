@@ -14,19 +14,32 @@ export default function BottomNavigation() {
   return (
     <div className="fixed bottom-0 left-0 right-0 flex justify-around border-t p-3">
       <BottomNavigationButton
-        icon={<HomeIcon />}
+        icon={
+          <HomeIcon
+            className={clsx(router.pathname === "/" && "stroke-cyan-600")}
+          />
+        }
         onClick={() => router.push("/")}
-        className={clsx(router.pathname === "/" && "text-cyan-600")}
       />
       <BottomNavigationButton
-        icon={<PlusCircleIcon />}
+        icon={
+          <PlusCircleIcon
+            className={clsx(
+              router.pathname.includes("/create") && "stroke-cyan-600"
+            )}
+          />
+        }
         onClick={() => router.push("/create")}
-        className={clsx(router.pathname.includes("/create") && "text-cyan-600")}
       />
       <BottomNavigationButton
-        icon={<UserIcon />}
+        icon={
+          <UserIcon
+            className={clsx(
+              router.pathname.includes("/user") && "stroke-cyan-600"
+            )}
+          />
+        }
         onClick={() => router.push("/user")}
-        className={clsx(router.pathname.includes("/user") && "text-cyan-600")}
       />
     </div>
   );

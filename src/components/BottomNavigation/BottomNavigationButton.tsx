@@ -11,10 +11,7 @@ function BottomNavigationButton(props: any) {
   return (
     <button
       type="button"
-      className={clsx(
-        "flex w-full items-center justify-center outline-none",
-        className
-      )}
+      className={clsx("flex w-full items-center justify-center", className)}
       {...otherProps}
     >
       <div className="h-6 w-6">{icon}</div>
