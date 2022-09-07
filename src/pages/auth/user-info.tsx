@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import Router, { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 export default function UserInfo() {
   const updateUsername = trpc.useMutation(["auth.updateUsername"]);
 
+  const { data: session, status } = useSession();
   const router = useRouter();
+
   const {
     register,
     formState: { errors },
@@ -20,9 +22,9 @@ export default function UserInfo() {
     },
   });
   const onSubmit = async (data: any) => {
-    await updateUsername.mutateAsync({ username: data.username });
-    // router.reload()
-    Router.push("/");
+    await updateUsername.mutateAsync({ username: data.username }).then(() => {
+      router.push("/");
+    });
   };
 
   const username = watch("username");
@@ -47,15 +49,15 @@ export default function UserInfo() {
     setValue("username", username.slice(0, -1));
   }
   return (
-    <div className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
+    <div className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
       <div className="w-full max-w-xs">
         <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          className="mb-4 rounded bg-white px-8 pt-6 pb-8 shadow-md"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="username"
             >
               Username
@@ -67,7 +69,7 @@ export default function UserInfo() {
                 maxLength: 30,
                 minLength: 2,
               })}
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+              className={`focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none ${
                 errors.username && "border-pink-500 text-pink-600"
               }`}
               id="username"
@@ -81,7 +83,7 @@ export default function UserInfo() {
           <div className="mb-6"></div>
           <div className="flex items-center justify-between">
             <a
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 pl-2"
+              className="inline-block pl-2 align-baseline text-sm font-bold text-blue-500 hover:text-blue-800"
               href="#"
             >
               Cancel
@@ -89,7 +91,7 @@ export default function UserInfo() {
 
             {username?.length === 0 ? (
               <button
-                className="bg-blue-200 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline rounded bg-blue-200 py-2 px-4 font-bold text-white focus:outline-none"
                 type="submit"
                 disabled
               >
@@ -97,7 +99,7 @@ export default function UserInfo() {
               </button>
             ) : (
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700 focus:outline-none"
                 type="submit"
               >
                 Next
@@ -105,7 +107,7 @@ export default function UserInfo() {
             )}
           </div>
         </form>
-        <p className="text-center text-gray-500 text-xs">
+        <p className="text-center text-xs text-gray-500">
           &copy;2020 Acme Corp. All rights reserved.
         </p>
       </div>

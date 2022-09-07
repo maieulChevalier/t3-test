@@ -1,9 +1,12 @@
-import type { NextPage } from "next";
+import type { ReactElement } from "react";
+import type { NextPageWithLayout } from "@/pages/_app";
+import BottomNavigationLayout from "@/components/BottomNavigationLayout";
+
 import { trpc } from "@/utils/trpc";
 
 import Spinner from "@/components/Spinner";
 import BottomNavigation from "@/components/BottomNavigation";
-import Head from "next/head";
+// import Head from "next/head";
 
 type TechnologyCardProps = {
   name: string;
@@ -11,20 +14,16 @@ type TechnologyCardProps = {
   documentation: string;
 };
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
   const { data, isLoading } = trpc.useQuery([
     "example.hello",
     { text: "from tRPC" },
   ]);
-  // const { data: session, status } = useSession();
-
-  // console.log("session: ", session);
 
   if (isLoading) return <Spinner />;
   return (
     <>
-      {/* <button className="btn">Button</button> */}
-
+      <div>Hello World</div>
       <BottomNavigation />
     </>
     // <>
@@ -75,11 +74,11 @@ const TechnologyCard = ({
   documentation,
 }: TechnologyCardProps) => {
   return (
-    <section className="flex flex-col justify-center p-6 duration-500 border-2 border-gray-500 rounded shadow-xl motion-safe:hover:scale-105">
+    <section className="flex flex-col justify-center rounded border-2 border-gray-500 p-6 shadow-xl duration-500 motion-safe:hover:scale-105">
       <h2 className="text-lg text-gray-700">{name}</h2>
       <p className="text-sm text-gray-600">{description}</p>
       <a
-        className="mt-3 text-sm underline text-violet-500 decoration-dotted underline-offset-2"
+        className="mt-3 text-sm text-violet-500 underline decoration-dotted underline-offset-2"
         href={documentation}
         target="_blank"
         rel="noreferrer"
@@ -88,6 +87,10 @@ const TechnologyCard = ({
       </a>
     </section>
   );
+};
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <BottomNavigationLayout>{page}</BottomNavigationLayout>;
 };
 
 export default Home;

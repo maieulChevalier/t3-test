@@ -1,5 +1,6 @@
 import { createRouter } from "./context";
 import { z } from "zod";
+import { encode } from "next-auth/jwt";
 
 export const authRouter = createRouter().mutation("updateUsername", {
   input: z.object({
@@ -16,6 +17,7 @@ export const authRouter = createRouter().mutation("updateUsername", {
       !/[A-Za-zÀ-ÖØ-öø-ÿ\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/.test(
         input.username
       )
+      // EXPLANATION:
       // A-Za-z0-9-_ À-ÖØ-öø-ÿ\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f
       // A-Za-z0-9-_  => alpha-numeric characters with - _ and spaces
       // À-ÖØ-öø-ÿ accept all french/german characters with accents
@@ -26,7 +28,7 @@ export const authRouter = createRouter().mutation("updateUsername", {
       throw new Error("We couldn't save your changes. Try again.");
     }
 
-    return await ctx.prisma.user.update({
+    const prismaUserUpdate = await ctx.prisma.user.update({
       where: {
         id: ctx.session?.user?.id,
       },
@@ -35,5 +37,6 @@ export const authRouter = createRouter().mutation("updateUsername", {
         role: "nameSet",
       },
     });
+    return prismaUserUpdate;
   },
 });

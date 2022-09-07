@@ -7,10 +7,27 @@ import { prisma } from "../../../server/db/client";
 import { env } from "../../../env/server.mjs";
 
 export const authOptions: NextAuthOptions = {
+  // session: { strategy: "jwt" },
   callbacks: {
     async redirect({ baseUrl }) {
       return baseUrl;
     },
+    // For JWT sessions, but can't be implemented now because jwt sessions can't have role based auth 7/09/2022
+    // async jwt(props) {
+    //   const { token, user } = props;
+    //   if (user) {
+    //     token.id = user.id;
+    //     token.role = user.role;
+    //   }
+    //   return props.token;
+    // },
+    // session({ session, token, user }) {
+    //   if (session.user) {
+    //     session.user.id = token.id;
+    //     session.user.role = token.role; // Add role value to user object so it is passed along with session
+    //   }
+    //   return session;
+    // },
     session({ session, user }) {
       if (session.user) {
         session.user.id = user.id;
@@ -18,10 +35,9 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    // async signIn({ user, account, profile, email, credentials }) {
-
-    //   return true
-    // }
+    async signIn({ user, account, profile, email, credentials }) {
+      return true;
+    },
   },
   pages: {
     signIn: "/api/auth/signin",
