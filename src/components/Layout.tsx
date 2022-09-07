@@ -1,5 +1,5 @@
 import useRedirect from "@/hooks/useRedirect";
-import { authorizationsAtom } from "@/jotai";
+import { authorizationsAtom, shouldReloadAtom } from "@/jotai";
 import { useAtom } from "jotai";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -35,6 +35,7 @@ export default function Layout({ children }: any) {
   //   return <Spinner />;
   // }
   // const { isRedirecting, status } = useRedirect();
+
   const { data: session, status } = useSession();
 
   if (status === "loading") {

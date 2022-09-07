@@ -1,3 +1,3 @@
 import { atom } from "jotai";
 
-export const authorizationsAtom = atom([""]);
+export const shouldReloadAtom = atom(false);

@@ -15,12 +15,12 @@ type TechnologyCardProps = {
 };
 
 const Home: NextPageWithLayout = () => {
-  const { data, isLoading } = trpc.useQuery([
-    "example.hello",
-    { text: "from tRPC" },
-  ]);
+  // const { data, isLoading } = trpc.useQuery([
+  //   "example.hello",
+  //   { text: "from tRPC" },
+  // ]);
 
-  if (isLoading) return <Spinner />;
+  // if (isLoading) return <Spinner />;
   return (
     <>
       <div>Hello World</div>

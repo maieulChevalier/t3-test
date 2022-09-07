@@ -1,15 +1,15 @@
-import React, { useReducer } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
-import { getSession, useSession } from "next-auth/react";
-import { useAtom } from "jotai";
-import { authorizationsAtom } from "@/jotai";
+
+export function refreshSession() {
+  const event = new Event("visibilitychange");
+  document.dispatchEvent(event);
+}
 
 export default function UserInfo() {
   const updateUsername = trpc.useMutation(["auth.updateUsername"]);
-
-  const router = useRouter();
 
   const {
     register,
@@ -25,7 +25,7 @@ export default function UserInfo() {
 
   const onSubmit = async (data: any) => {
     await updateUsername.mutateAsync({ username: data.username }).then(() => {
-      router.reload();
+      refreshSession();
     });
   };
 
