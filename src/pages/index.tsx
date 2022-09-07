@@ -1,11 +1,11 @@
 import type { ReactElement } from "react";
 import type { NextPageWithLayout } from "@/pages/_app";
-import BottomNavigationLayout from "@/components/BottomNavigationLayout";
+import BottomNavigationLayout from "@/components/LayoutNavigationBottom";
 
 import { trpc } from "@/utils/trpc";
 
 import Spinner from "@/components/Spinner";
-import BottomNavigation from "@/components/BottomNavigation";
+import BottomNavigation from "@/components/NavigationBottom";
 // import Head from "next/head";
 
 type TechnologyCardProps = {

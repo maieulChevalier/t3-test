@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import type { NextPageWithLayout } from "@/pages/_app";
-import BottomNavigationLayout from "@/components/BottomNavigationLayout";
+import BottomNavigationLayout from "@/components/LayoutNavigationBottom";
 
 import {
   CalendarIcon,
@@ -11,8 +11,6 @@ import {
   UsersIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
-import BottomNavigation from "@/components/BottomNavigation";
-import BottomNavigationButton from "@/components/BottomNavigation/BottomNavigationButton";
 
 const navigation = [
   {

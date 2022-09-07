@@ -4,7 +4,7 @@ import {
   PlusCircleIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import BottomNavigationButton from "./BottomNavigationButton";
+import BottomNavigationButton from "@/components/NavigationBottomButton";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 

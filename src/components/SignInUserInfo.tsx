@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
+import Spinner from "./Spinner";
 
 export function refreshSession() {
   const event = new Event("visibilitychange");
@@ -9,7 +10,9 @@ export function refreshSession() {
 }
 
 export default function UserInfo() {
-  const updateUsername = trpc.useMutation(["auth.updateUsername"]);
+  const { mutateAsync: asyncUpdateUsername, isLoading } = trpc.useMutation([
+    "auth.updateUsername",
+  ]);
 
   const {
     register,
@@ -24,7 +27,7 @@ export default function UserInfo() {
   });
 
   const onSubmit = async (data: any) => {
-    await updateUsername.mutateAsync({ username: data.username }).then(() => {
+    await asyncUpdateUsername({ username: data.username }).then(() => {
       refreshSession();
     });
   };
@@ -49,6 +52,8 @@ export default function UserInfo() {
   if (username.length > 30) {
     setValue("username", username.slice(0, -1));
   }
+
+  if (isLoading) return <Spinner />;
   return (
     <div className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
       <div className="w-full max-w-xs">
@@ -71,7 +76,9 @@ export default function UserInfo() {
                 minLength: 2,
               })}
               className={`focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none ${
-                errors.username && "border-pink-500 text-pink-600"
+                errors.username &&
+                watch("username")?.length === 0 &&
+                "border-pink-500 text-pink-600"
               }`}
               id="username"
               type="text"
@@ -89,18 +96,27 @@ export default function UserInfo() {
             >
               Cancel
             </a>
-
             {username?.length === 0 ? (
               <button
-                className="focus:shadow-outline rounded bg-blue-200 py-2 px-4 font-bold text-white focus:outline-none"
+                className="focus:shadow-outline rounded bg-slate-200 py-2 px-4 font-bold text-white focus:outline-none"
                 type="submit"
                 disabled
               >
+                {/* {isLoading ? (
+                  <svg
+                    className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-[3px] border-current border-t-transparent"
+                    role="status"
+                    aria-label="loading"
+                    viewBox="0 0 24 24"
+                  ></svg>
+                ) : (
+                  ""
+                )} */}
                 Next
               </button>
             ) : (
               <button
-                className="focus:shadow-outline rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700 focus:outline-none"
+                className="focus:shadow-outline rounded bg-slate-500 py-2 px-4 font-bold text-white hover:bg-slate-600 focus:outline-none"
                 type="submit"
               >
                 Next

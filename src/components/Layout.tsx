@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import SignIn from "./SignIn";
 import Spinner from "./Spinner";
-import UserInfo from "./UserInfo";
+import UserInfo from "./SignInUserInfo";
 
 export default function Layout({ children }: any) {
   // ALLOWS DISPLAYING A SPINNER WHEN TRANSITIONNING TO ANOTHER PAGE, COULD BE USED TO SHOW ANOTHER TRANSITION UI

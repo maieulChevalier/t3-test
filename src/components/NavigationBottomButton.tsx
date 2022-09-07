@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { ReactNode } from "react";
 
-function BottomNavigationButton(props: any) {
+export default function BottomNavigationButton(props: any) {
   const { icon, className, ...otherProps } = props;
 
   return (
@@ -14,8 +14,6 @@ function BottomNavigationButton(props: any) {
     </button>
   );
 }
-
-export default BottomNavigationButton;
 
 // Use this pattern to set default className and other props directly to child component from parent component when child component is not known beforehand
 // export default function ImageSlider(props) {
