@@ -4,7 +4,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 
-export default function TopNavigation() {
+export default function LayoutNavbarTop() {
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (

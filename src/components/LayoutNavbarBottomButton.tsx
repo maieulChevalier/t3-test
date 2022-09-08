@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { ReactNode } from "react";
 
-export default function BottomNavigationButton(props: any) {
+export default function LayoutNavbarBottomButton(props: any) {
   const { icon, className, ...otherProps } = props;
 
   return (

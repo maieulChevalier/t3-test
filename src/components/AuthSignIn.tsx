@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { getProviders, signIn } from "next-auth/react";
 
-export default function SignIn() {
+export default function AuthSignIn() {
   return (
     <>
       <Head>

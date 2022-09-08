@@ -1,11 +1,7 @@
 import type { ReactElement } from "react";
 import type { NextPageWithLayout } from "@/pages/_app";
-import BottomNavigationLayout from "@/components/LayoutNavigationBottom";
+import LayoutNavbarBottom from "@/components/LayoutNavbarBottom";
 
-import { trpc } from "@/utils/trpc";
-
-import Spinner from "@/components/Spinner";
-import BottomNavigation from "@/components/NavigationBottom";
 // import Head from "next/head";
 
 type TechnologyCardProps = {
@@ -89,7 +85,7 @@ const TechnologyCard = ({
 };
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return <BottomNavigationLayout>{page}</BottomNavigationLayout>;
+  return <LayoutNavbarBottom>{page}</LayoutNavbarBottom>;
 };
 
 export default Home;

@@ -10,7 +10,7 @@ import { SessionProvider } from "next-auth/react";
 import superjson from "superjson";
 import type { AppRouter } from "../server/router";
 import "../styles/globals.css";
-import Layout from "@/components/Layout";
+import LayoutApp from "@/components/LayoutApp";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -28,7 +28,7 @@ const MyApp: any = ({
 
   return (
     <SessionProvider session={session}>
-      <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
+      <LayoutApp>{getLayout(<Component {...pageProps} />)}</LayoutApp>
     </SessionProvider>
   );
 };

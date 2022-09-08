@@ -2,14 +2,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
-import Spinner from "./Spinner";
+import Spinner from "./LoaderPacman";
 
 export function refreshSession() {
   const event = new Event("visibilitychange");
   document.dispatchEvent(event);
 }
 
-export default function UserInfo() {
+export default function AuthSignInUserInfo() {
   const { mutateAsync: asyncUpdateUsername, isLoading } = trpc.useMutation([
     "auth.updateUsername",
   ]);

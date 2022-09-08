@@ -1,7 +1,5 @@
 import type { ReactElement } from "react";
 import type { NextPageWithLayout } from "@/pages/_app";
-import BottomNavigationLayout from "@/components/LayoutNavigationBottom";
-
 import {
   CalendarIcon,
   ChartBarIcon,
@@ -13,6 +11,7 @@ import {
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 import clsx from "clsx";
+import LayoutNavbarBottom from "@/components/LayoutNavbarBottom";
 
 const navigation = [
   {
@@ -75,7 +74,7 @@ const User: NextPageWithLayout = () => {
 };
 
 User.getLayout = function getLayout(page: ReactElement) {
-  return <BottomNavigationLayout>{page}</BottomNavigationLayout>;
+  return <LayoutNavbarBottom>{page}</LayoutNavbarBottom>;
 };
 
 export default User;

@@ -1,10 +1,10 @@
 import { useSession } from "next-auth/react";
-import SignIn from "./SignIn";
-import Spinner from "./Spinner";
-import UserInfo from "./SignInUserInfo";
+import SignIn from "./AuthSignIn";
+import Spinner from "./LoaderPacman";
+import SignInUserInfo from "./AuthSignInUserInfo";
 import { useEffect, useState } from "react";
 
-export default function Layout({ children }: any) {
+export default function LayoutApp({ children }: any) {
   // ALLOWS DISPLAYING A SPINNER WHEN TRANSITIONNING TO ANOTHER PAGE, COULD BE USED TO SHOW ANOTHER TRANSITION UI
   // const router = useRouter();
   // const [loading, setLoading] = useState(false);
@@ -54,7 +54,7 @@ export default function Layout({ children }: any) {
     }
 
     if (status === "authenticated" && session?.user?.role === null) {
-      return <UserInfo />;
+      return <SignInUserInfo />;
     }
     if (status === "authenticated" && session?.user?.role === "nameSet") {
       return (
