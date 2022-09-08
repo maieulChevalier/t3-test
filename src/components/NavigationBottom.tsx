@@ -12,7 +12,10 @@ export default function BottomNavigation() {
   const router = useRouter();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex justify-around border-t p-3 ">
+    <nav
+      className="fixed bottom-0 left-0 right-0 flex justify-around border-t p-3"
+      aria-label="Navbar"
+    >
       <BottomNavigationButton
         icon={
           <HomeIcon
@@ -35,12 +38,12 @@ export default function BottomNavigation() {
         icon={
           <UserIcon
             className={clsx(
-              router.pathname.includes("/user") && "stroke-slate-500"
+              router.pathname.includes("/me") && "stroke-slate-500"
             )}
           />
         }
-        onClick={() => router.push("/user")}
+        onClick={() => router.push("/me")}
       />
-    </div>
+    </nav>
   );
 }

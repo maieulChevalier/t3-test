@@ -24,7 +24,6 @@ const Home: NextPageWithLayout = () => {
   return (
     <>
       <div>Hello World</div>
-      <BottomNavigation />
     </>
     // <>
     //   <Head>
