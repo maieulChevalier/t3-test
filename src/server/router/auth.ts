@@ -34,7 +34,7 @@ export const authRouter = createRouter().mutation("updateUsername", {
       },
       data: {
         name: input.username,
-        role: "nameSet",
+        isNameSet: true,
       },
     });
     return prismaUserUpdate;

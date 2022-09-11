@@ -1,12 +1,8 @@
 import type { ReactElement } from "react";
 import type { NextPageWithLayout } from "@/pages/_app";
 import {
-  CalendarIcon,
-  ChartBarIcon,
-  FolderIcon,
-  HomeIcon,
-  InboxIcon,
-  UsersIcon,
+  ArrowLeftOnRectangleIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
@@ -15,9 +11,9 @@ import LayoutNavbarBottom from "@/components/LayoutNavbarBottom";
 
 const navigation = [
   {
-    name: "Account",
-    url: "/me/account",
-    icon: HomeIcon,
+    name: "Settings",
+    url: "/me/settings",
+    icon: UserCircleIcon,
     // current: true,
   },
   // {
@@ -32,10 +28,10 @@ const navigation = [
   // },
   // { name: "Documents", url: "/documents", icon: InboxIcon },
   // { name: "Reports", url: "/reports", icon: ChartBarIcon },
-  { name: "Log out", url: "/auth/logout", icon: UsersIcon, onClick: signOut },
+  { name: "Log out", icon: ArrowLeftOnRectangleIcon, onClick: signOut },
 ];
 
-const User: NextPageWithLayout = () => {
+const Me: NextPageWithLayout = () => {
   const router = useRouter();
   const { data: session } = useSession();
   return (
@@ -73,8 +69,8 @@ const User: NextPageWithLayout = () => {
   );
 };
 
-User.getLayout = function getLayout(page: ReactElement) {
+Me.getLayout = function getLayout(page: ReactElement) {
   return <LayoutNavbarBottom>{page}</LayoutNavbarBottom>;
 };
 
-export default User;
+export default Me;

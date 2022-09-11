@@ -44,7 +44,7 @@ export default function LayoutNavbarBottom({ children }: any) {
           }
           onClick={() => router.push("/me")}
         />
-      </nav>{" "}
+      </nav>
     </>
   );
 }

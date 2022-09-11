@@ -37,7 +37,6 @@ export default function LayoutApp({ children }: any) {
   const [isOnline, setIsOnline] = useState(false);
 
   useEffect(() => {
-    console.log("helo");
     if (navigator.onLine) {
       setIsOnline(true);
     } else {
@@ -53,10 +52,10 @@ export default function LayoutApp({ children }: any) {
       return <SignIn />;
     }
 
-    if (status === "authenticated" && session?.user?.role === null) {
+    if (status === "authenticated" && session?.user?.isNameSet === false) {
       return <SignInUserInfo />;
     }
-    if (status === "authenticated" && session?.user?.role === "nameSet") {
+    if (status === "authenticated" && session?.user?.isNameSet) {
       return (
         <>
           <main>{children}</main>

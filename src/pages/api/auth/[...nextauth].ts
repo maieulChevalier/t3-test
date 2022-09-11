@@ -29,9 +29,10 @@ export const authOptions: NextAuthOptions = {
     //   return session;
     // },
     session({ session, user }) {
+      console.log("user:", user);
       if (session.user) {
         session.user.id = user.id;
-        session.user.role = user.role; // Add role value to user object so it is passed along with session
+        session.user.isNameSet = user.isNameSet; // Add role value to user object so it is passed along with session
       }
       return session;
     },

@@ -124,9 +124,6 @@ export default function AuthSignInUserInfo() {
             )}
           </div>
         </form>
-        <p className="text-center text-xs text-gray-500">
-          &copy;2020 Acme Corp. All rights reserved.
-        </p>
       </div>
     </div>
   );

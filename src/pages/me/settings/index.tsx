@@ -1,14 +1,16 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import { trpc } from "@/utils/trpc";
 import LoaderPacman from "@/components/LoaderPacman";
+import { NextPageWithLayout } from "@/pages/_app";
+import LayoutNavbarTopGoBack from "@/components/LayoutNavbarTopGoBack";
 
 export function refreshSession() {
   const event = new Event("visibilitychange");
   document.dispatchEvent(event);
 }
 
-export default function SignInUserInfo() {
+const MeSettings: NextPageWithLayout = () => {
   const { mutateAsync: asyncUpdateUsername, isLoading } = trpc.useMutation([
     "auth.updateUsername",
   ]);
@@ -123,10 +125,13 @@ export default function SignInUserInfo() {
             )}
           </div>
         </form>
-        <p className="text-center text-xs text-gray-500">
-          &copy;2020 Acme Corp. All rights reserved.
-        </p>
       </div>
     </div>
   );
-}
+};
+
+MeSettings.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutNavbarTopGoBack>{page}</LayoutNavbarTopGoBack>;
+};
+
+export default MeSettings;

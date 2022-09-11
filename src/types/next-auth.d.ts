@@ -9,11 +9,11 @@ declare module "next-auth" {
   interface Session {
     user?: {
       id: string;
-      role: string;
+      isNameSet: boolean;
     } & DefaultSession["user"];
   }
   interface User {
-    role: string;
+    isNameSet: boolean;
   }
 }
 // FOR JWT AUTH
