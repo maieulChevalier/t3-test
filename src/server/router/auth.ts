@@ -1,6 +1,5 @@
 import { createRouter } from "./context";
 import { z } from "zod";
-import { encode } from "next-auth/jwt";
 
 export const authRouter = createRouter().mutation("updateUsername", {
   input: z.object({

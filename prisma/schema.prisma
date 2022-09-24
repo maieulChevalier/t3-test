@@ -19,7 +19,6 @@ model Example {
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
-    userId            String
     type              String
     provider          String
     providerAccountId String
@@ -32,9 +31,65 @@ model Account {
     session_state     String?
     // oauth_token_secret String?
     // oauth_token        String?
+    userId            String
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+}
+
+model Comment {
+    id        String               @id @default(cuid())
+    createdAt DateTime             @default(now())
+    Post      Post                 @relation(fields: [postId], references: [id])
+    postId    String
+    createdBy User                 @relation(fields: [userId], references: [id])
+    userId    String
+    upvotedBy UserUpvotedComment[]
+    viewedBy  UserViewedComment[]
+}
+
+// For polls
+model Choice {
+    id     String @id @default(cuid())
+    Post   Post   @relation(fields: [postId], references: [id])
+    postId String
+}
+
+model Community {
+    id              String                  @id @default(cuid())
+    createdAt       DateTime                @default(now())
+    name            String                  @unique
+    numberOfMembers Int
+    createdBy       User                    @relation(fields: [userId], references: [id])
+    userId          String
+    joinedBy        UserJoinedCommunity[]
+    posts           PostTaggedInCommunity[]
+}
+
+model Post {
+    id                   String                  @id @default(cuid())
+    createdAt            DateTime                @default(now())
+    title                String
+    text                 String?
+    type                 String
+    numberOfUpvotes      Int                     @default(1)
+    numberOfViews        Int                     @default(1)
+    upvotesPerViewsRatio Float                   @default(1)
+    createdBy            User                    @relation(fields: [userId], references: [id])
+    userId               String
+    upvotedBy            UserUpvotedPost[]
+    viewedBy             UserViewedPost[]
+    taggedIn             PostTaggedInCommunity[]
+    comments             Comment[]
+    startDate            DateTime?
+    endDate              DateTime?
+    choices              Choice[]
+    geoLocation          Unsupported("point")?
+    // image String #URL to CDN
+    // video String #URL to CDN
+    // conterparts  [Counterpart] // for crowdfunding
+    // lendingTerms [LendingTerm] // for crowdfunding
+    // equityTerms [EquityTerms] // for crowdfunding
 }
 
 model Session {
@@ -46,17 +101,26 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    createdAt     DateTime  @default(now())
-    updatedAt     DateTime  @updatedAt
-    // posts         Post[]
-    accounts      Account[]
-    sessions      Session[]
-    isNameSet     Boolean   @default(false)
+    id                       String                  @id @default(cuid())
+    name                     String?
+    email                    String?                 @unique
+    emailVerified            DateTime?
+    image                    String?
+    createdAt                DateTime                @default(now())
+    updatedAt                DateTime                @updatedAt
+    reputation               Int?
+    isNameSet                Boolean                 @default(false)
+    accounts                 Account[]
+    sessions                 Session[]
+    postsCreated             Post[]
+    postsUpvoted             UserUpvotedPost[]
+    postsViewed              UserViewedPost[]
+    postsTaggedInCommunities PostTaggedInCommunity[]
+    commentsCreated          Comment[]
+    commentsUpvoted          UserUpvotedComment[]
+    commentsViewed           UserViewedComment[]
+    communitiesCreated       Community[]
+    communitiesJoined        UserJoinedCommunity[]
 }
 
 model VerificationToken {
@@ -65,4 +129,68 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+// REL TABLES
+
+model UserJoinedCommunity {
+    community   Community @relation(fields: [communityId], references: [id])
+    communityId String
+    user        User      @relation(fields: [userId], references: [id])
+    userId      String
+    atDateTime  DateTime  @default(now())
+
+    @@id([communityId, userId])
+}
+
+model UserUpvotedPost {
+    post       Post     @relation(fields: [postId], references: [id])
+    postId     String
+    user       User     @relation(fields: [userId], references: [id])
+    userId     String
+    atDateTime DateTime @default(now())
+
+    @@id([postId, userId])
+}
+
+model UserViewedPost {
+    post       Post     @relation(fields: [postId], references: [id])
+    postId     String
+    user       User     @relation(fields: [userId], references: [id])
+    userId     String
+    atDateTime DateTime @default(now())
+
+    @@id([postId, userId])
+}
+
+model UserUpvotedComment {
+    comment    Comment  @relation(fields: [commentId], references: [id])
+    commentId  String
+    user       User     @relation(fields: [userId], references: [id])
+    userId     String
+    atDateTime DateTime @default(now())
+
+    @@id([commentId, userId])
+}
+
+model UserViewedComment {
+    comment    Comment  @relation(fields: [commentId], references: [id])
+    commentId  String
+    user       User     @relation(fields: [userId], references: [id])
+    userId     String
+    atDateTime DateTime @default(now())
+
+    @@id([commentId, userId])
+}
+
+model PostTaggedInCommunity {
+    post        Post      @relation(fields: [postId], references: [id])
+    postId      String
+    community   Community @relation(fields: [communityId], references: [id])
+    communityId String
+    atDateTime  DateTime  @default(now())
+    by          User      @relation(fields: [userId], references: [id])
+    userId      String
+
+    @@id([postId, communityId]) // Or @@id([postId, communityId, userId])??
 }
