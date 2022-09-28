@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
 import Spinner from "./LoaderPacman";
+import clsx from "clsx";
+
+type UserData = {
+  username: string;
+};
 
 export function refreshSession() {
   const event = new Event("visibilitychange");
@@ -26,8 +31,8 @@ export default function AuthSignInUserInfo() {
     },
   });
 
-  const onSubmit = async (data: any) => {
-    await asyncUpdateUsername({ username: data.username }).then(() => {
+  const onSubmit = async (data: UserData) => {
+    return await asyncUpdateUsername({ username: data.username }).then(() => {
       refreshSession();
     });
   };
@@ -75,11 +80,12 @@ export default function AuthSignInUserInfo() {
                 maxLength: 30,
                 minLength: 2,
               })}
-              className={`focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none ${
+              className={clsx(
+                "focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none",
                 errors.username &&
-                watch("username")?.length === 0 &&
-                "border-pink-500 text-pink-600"
-              }`}
+                  watch("username")?.length === 0 &&
+                  "border-pink-500 text-pink-600"
+              )}
               id="username"
               type="text"
               placeholder="Username"

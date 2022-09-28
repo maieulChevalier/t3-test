@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import Head from "next/head";
-import { getProviders, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 export default function AuthSignIn() {
   return (

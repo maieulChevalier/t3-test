@@ -118,11 +118,6 @@ async function createUsers() {
   });
   console.log(post);
   const test = await prisma.post.findMany({
-    select: {
-      _count: {
-        select: { upvotedBy: true },
-      },
-    },
     where: {
       upvotedBy: {
         some: {
