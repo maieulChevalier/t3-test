@@ -1,10 +1,12 @@
+import { ReactNode } from "react";
+
 import { useSession } from "next-auth/react";
 import SignIn from "./AuthSignIn";
 import Spinner from "./LoaderPacman";
 import SignInUserInfo from "./AuthSignInUserInfo";
 import { useEffect, useState } from "react";
 
-export default function LayoutApp({ children }: any) {
+export default function LayoutApp({ children }: { children: ReactNode }) {
   // ALLOWS DISPLAYING A SPINNER WHEN TRANSITIONNING TO ANOTHER PAGE, COULD BE USED TO SHOW ANOTHER TRANSITION UI
   // const router = useRouter();
   // const [loading, setLoading] = useState(false);
@@ -42,7 +44,7 @@ export default function LayoutApp({ children }: any) {
     } else {
       setIsOnline(false);
     }
-  });
+  }, []);
 
   if (isOnline) {
     if (status === "loading") {

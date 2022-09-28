@@ -1,7 +1,12 @@
+import { ReactNode } from "react";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 
-export default function LayoutNavbarTopGoBack({ children }: any) {
+export default function LayoutNavbarTopGoBack({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const router = useRouter();
   return (
     <>

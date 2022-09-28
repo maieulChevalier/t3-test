@@ -46,6 +46,7 @@ const Me: NextPageWithLayout = () => {
         {navigation.map((item) => (
           <button
             key={item.name}
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={() =>
               item.onClick ? item.onClick() : router.push(item.url)
             }

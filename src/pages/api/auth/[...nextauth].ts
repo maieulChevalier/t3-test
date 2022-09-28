@@ -9,7 +9,7 @@ import { env } from "../../../env/server.mjs";
 export const authOptions: NextAuthOptions = {
   // session: { strategy: "jwt" },
   callbacks: {
-    async redirect({ baseUrl }) {
+    redirect({ baseUrl }) {
       return baseUrl;
     },
     // For JWT sessions, but can't be implemented now because jwt sessions can't have role based auth 7/09/2022
@@ -36,7 +36,7 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    async signIn({ user, account, profile, email, credentials }) {
+    signIn() {
       return true;
     },
   },

@@ -18,6 +18,7 @@ type CreateContextOptions = {
  * - testing, where we dont have to Mock Next.js' req/res
  * - trpc's `createSSGHelpers` where we don't have req/res
  **/
+// eslint-disable-next-line @typescript-eslint/require-await
 export const createContextInner = async (opts: CreateContextOptions) => {
   return {
     session: opts.session,

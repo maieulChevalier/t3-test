@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 import {
   HomeIcon,
   PlusCircleIcon,
@@ -7,7 +9,11 @@ import clsx from "clsx";
 import { useRouter } from "next/router";
 import LayoutNavbarBottomButton from "./LayoutNavbarBottomButton";
 
-export default function LayoutNavbarBottom({ children }: any) {
+export default function LayoutNavbarBottom({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const router = useRouter();
   return (
     <>

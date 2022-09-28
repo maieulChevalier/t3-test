@@ -4,6 +4,7 @@ import { trpc } from "@/utils/trpc";
 import LoaderPacman from "@/components/LoaderPacman";
 import { NextPageWithLayout } from "@/pages/_app";
 import LayoutNavbarTopGoBack from "@/components/LayoutNavbarTopGoBack";
+import clsx from "clsx";
 
 export function refreshSession() {
   const event = new Event("visibilitychange");
@@ -27,7 +28,7 @@ const MeSettings: NextPageWithLayout = () => {
     },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: { username: string }) => {
     await asyncUpdateUsername({ username: data.username }).then(() => {
       refreshSession();
     });
@@ -60,6 +61,7 @@ const MeSettings: NextPageWithLayout = () => {
       <div className="w-full max-w-xs">
         <form
           className="mb-4 rounded bg-white px-8 pt-6 pb-8 shadow-md"
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="mb-4">
@@ -76,11 +78,12 @@ const MeSettings: NextPageWithLayout = () => {
                 maxLength: 30,
                 minLength: 2,
               })}
-              className={`focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none ${
+              className={clsx(
+                "focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none",
                 errors.username &&
-                watch("username")?.length === 0 &&
-                "border-pink-500 text-pink-600"
-              }`}
+                  watch("username")?.length === 0 &&
+                  "border-pink-500 text-pink-600"
+              )}
               id="username"
               type="text"
               placeholder="Username"
