@@ -2,6 +2,7 @@
 import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
+import { Session } from "next-auth/core/types";
 
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
@@ -12,18 +13,22 @@ import type { AppRouter } from "../server/router";
 import "../styles/globals.css";
 import LayoutApp from "@/components/LayoutApp";
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
+  pageProps: {
+    session: Session;
+  };
 };
 
-const MyApp: any = ({
+function MyApp({
   Component,
   pageProps: { session, ...pageProps },
-}: AppPropsWithLayout) => {
+}: AppPropsWithLayout): JSX.Element {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
@@ -31,7 +36,7 @@ const MyApp: any = ({
       <LayoutApp>{getLayout(<Component {...pageProps} />)}</LayoutApp>
     </SessionProvider>
   );
-};
+}
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
